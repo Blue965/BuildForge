@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BuildForge | Roblox AI Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand-wrap">
+          <div class="brand-badge">BF</div>
+          <div class="brand-copy">
+            <span class="brand-name">BuildForge</span>
+            <span class="brand-sub">Studio AI</span>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <a href="#features">Fonctionnalités</a>
+          <a href="#studio">Studio</a>
+          <a href="#pricing">Tarifs</a>
+        </nav>
+
+        <button class="ghost-btn">Se connecter</button>
+      </header>
+
+      <main class="hero">
+        <section class="hero-copy">
+          <div class="badge-pill">⚡ IA pour créer Roblox Studio</div>
+          <h1>Crée tes mondes, UI, scripts et animations en une seule plateforme.</h1>
+          <p>
+            BuildForge aide les créateurs Roblox à générer des modèles, des interfaces,
+            des animations et des systèmes via une IA puissante et intuitive.
+          </p>
+
+          <div class="cta-row">
+            <button class="primary-btn">Commencer</button>
+            <button class="secondary-btn">Voir la démo</button>
+          </div>
+
+          <div class="mini-stats">
+            <div>
+              <strong>12k+</strong>
+              <span>Créateurs</span>
+            </div>
+            <div>
+              <strong>4.9/5</strong>
+              <span>Note</span>
+            </div>
+            <div>
+              <strong>AI</strong>
+              <span>Live designer</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="auth-panel">
+          <div class="panel-card">
+            <div class="panel-header">
+              <p class="eyebrow">Bienvenue</p>
+              <h2>Connecte-toi</h2>
+            </div>
+
+            <div class="provider-list">
+              <button class="provider-btn roblox-btn" data-provider="roblox">
+                <span>🎮</span>
+                Continuer avec Roblox
+              </button>
+              <button class="provider-btn google-btn" data-provider="google">
+                <span>🔵</span>
+                Continuer avec Google
+              </button>
+            </div>
+
+            <div class="divider"><span>ou</span></div>
+
+            <form id="email-form" class="email-form">
+              <label>
+                <span>Email</span>
+                <input type="email" id="emailInput" placeholder="prenom@buildforge.io" required />
+              </label>
+
+              <label>
+                <span>Nom d’utilisateur</span>
+                <input type="text" id="usernameInput" placeholder="BuildBoss" />
+              </label>
+
+              <label>
+                <span>Mot de passe</span>
+                <input type="password" id="passwordInput" placeholder="••••••••" required />
+              </label>
+
+              <button type="submit" class="submit-btn">Créer mon compte</button>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <section id="features" class="feature-section">
+        <div class="section-title">
+          <p>Tout ce qu’il faut</p>
+          <h3>Des outils IA pour tout construire</h3>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card card-purple">
+            <span class="emoji">🏗️</span>
+            <h4>Build 3D</h4>
+            <p>Crée des modèles, décors et environnements à partir de concepts.</p>
+          </article>
+
+          <article class="feature-card card-orange">
+            <span class="emoji">✨</span>
+            <h4>Animation IA</h4>
+            <p>Génère des mouvements fluides pour personnages, caméras et props.</p>
+          </article>
+
+          <article class="feature-card card-blue">
+            <span class="emoji">🧩</span>
+            <h4>UI Builder</h4>
+            <p>Conçois des interfaces de jeu et menus modernisés en un instant.</p>
+          </article>
+
+          <article class="feature-card card-green">
+            <span class="emoji">⚙️</span>
+            <h4>Scripts</h4>
+            <p>Crée des systèmes de gameplay, inventaires et événements Roblox.</p>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
