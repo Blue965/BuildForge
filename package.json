@@ -2,9 +2,9 @@
   "name": "buildforge",
   "version": "1.0.0",
   "description": "BuildForge — AI-powered creation hub for Roblox Studio",
-  "main": "server.js",
+  "main": "api/server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node api/server.js"
   },
   "keywords": [
     "roblox",
