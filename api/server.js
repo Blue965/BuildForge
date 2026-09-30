@@ -4,9 +4,9 @@ const mongoose = require('mongoose');
 const path = require('path');
 require('dotenv').config();
 
-const authRoutes = require('../api/auth');
-const projectsRoutes = require('../api/projects');
-const usersRoutes = require('../api/users');
+const authRoutes = require('./auth');
+const projectsRoutes = require('./projects');
+const usersRoutes = require('./users');
 
 const app = express();
 
@@ -14,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Serve frontend
 app.use(express.static(path.join(__dirname, '../public')));
 
 // MongoDB
@@ -43,10 +44,9 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Frontend
+// Frontend fallback
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public', 'index.html'));
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-// Export for Vercel
 module.exports = app;
