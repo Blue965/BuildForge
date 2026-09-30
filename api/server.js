@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 const path = require("path");
 
 require("dotenv").config();
@@ -11,9 +12,9 @@ const usersRoutes = require("./users");
 
 const app = express();
 
-// ==============================
-// Middleware
-// ==============================
+/* =====================================================
+   MIDDLEWARE
+===================================================== */
 
 app.use(
   cors({
@@ -23,25 +24,42 @@ app.use(
 );
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// ==============================
-// Static frontend
-// ==============================
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
-const publicPath = path.join(__dirname, "../public");
+app.use(cookieParser());
 
-app.use(express.static(publicPath));
+/* =====================================================
+   FRONTEND
+===================================================== */
 
-// ==============================
-// MongoDB
-// ==============================
+const publicPath =
+  path.join(
+    __dirname,
+    "../public"
+  );
+
+app.use(
+  express.static(publicPath)
+);
+
+/* =====================================================
+   MONGODB
+===================================================== */
 
 if (process.env.MONGODB_URI) {
   mongoose
-    .connect(process.env.MONGODB_URI)
+    .connect(
+      process.env.MONGODB_URI
+    )
     .then(() => {
-      console.log("MongoDB connected");
+      console.log(
+        "MongoDB connected successfully."
+      );
     })
     .catch((error) => {
       console.error(
@@ -50,40 +68,67 @@ if (process.env.MONGODB_URI) {
       );
     });
 } else {
-  console.warn("MONGODB_URI is not configured.");
+  console.error(
+    "MONGODB_URI is missing."
+  );
 }
 
-// ==============================
-// Health
-// ==============================
+/* =====================================================
+   HEALTH
+===================================================== */
 
-app.get("/api/health", (req, res) => {
-  res.json({
-    status: "ok",
-    app: "BuildForge",
-    database:
-      mongoose.connection.readyState === 1
-        ? "connected"
-        : "disconnected",
-  });
-});
+app.get(
+  "/api/health",
+  (req, res) => {
+    res.json({
+      success: true,
+      app: "BuildForge",
+      database:
+        mongoose.connection
+          .readyState === 1
+          ? "connected"
+          : "disconnected",
+    });
+  }
+);
 
-// ==============================
-// API routes
-// ==============================
+/* =====================================================
+   AUTH
+===================================================== */
 
-app.use("/api/auth", authRoutes);
-app.use("/api/projects", projectsRoutes);
-app.use("/api/users", usersRoutes);
+app.use(
+  "/api/auth",
+  authRoutes
+);
 
-// ==============================
-// Frontend fallback
-// ==============================
+/* =====================================================
+   OTHER API
+===================================================== */
 
-app.get("*", (req, res) => {
-  res.sendFile(
-    path.join(publicPath, "index.html")
-  );
-});
+app.use(
+  "/api/projects",
+  projectsRoutes
+);
+
+app.use(
+  "/api/users",
+  usersRoutes
+);
+
+/* =====================================================
+   FRONTEND FALLBACK
+===================================================== */
+
+app.get(
+  "*",
+  (req, res) => {
+    res.sendFile(
+      path.join(
+        publicPath,
+        "index.html"
+      )
+    );
+  }
+);
 
 module.exports = app;
