@@ -1,54 +1,38 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
 const User = require("../models/User");
 
 const router = express.Router();
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-if (!JWT_SECRET) {
-  console.warn("WARNING: JWT_SECRET is not configured.");
-}
+const COOKIE_NAME = "buildforge_session";
 
-// ==============================
-// Helpers
-// ==============================
+const COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax",
+  maxAge: 7 * 24 * 60 * 60 * 1000,
+  path: "/",
+};
 
-function normalizeEmail(email) {
+function cleanEmail(email) {
   return String(email || "")
     .trim()
     .toLowerCase();
 }
 
-function normalizeUsername(username) {
-  return String(username || "")
-    .trim();
+function cleanUsername(username) {
+  return String(username || "").trim();
 }
 
-function isValidEmail(email) {
+function validEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function createToken(user) {
-  if (!JWT_SECRET) {
-    throw new Error("JWT_SECRET is missing");
-  }
-
-  return jwt.sign(
-    {
-      sub: user._id.toString(),
-      username: user.username,
-      email: user.email,
-    },
-    JWT_SECRET,
-    {
-      expiresIn: "7d",
-    }
-  );
-}
-
-function safeUser(user) {
+function publicUser(user) {
   return {
     id: user._id.toString(),
     username: user.username,
@@ -58,32 +42,45 @@ function safeUser(user) {
   };
 }
 
-// ==============================
-// REGISTER
-// POST /api/auth/register
-// ==============================
+function createToken(user) {
+  if (!JWT_SECRET) {
+    throw new Error("JWT_SECRET is missing.");
+  }
+
+  return jwt.sign(
+    {
+      sub: user._id.toString(),
+    },
+    JWT_SECRET,
+    {
+      expiresIn: "7d",
+    }
+  );
+}
+
+/* =====================================================
+   REGISTER
+   POST /api/auth/register
+===================================================== */
 
 router.post("/register", async (req, res) => {
   try {
-    const username = normalizeUsername(req.body.username);
-    const email = normalizeEmail(req.body.email);
+    const username = cleanUsername(req.body.username);
+    const email = cleanEmail(req.body.email);
     const password = String(req.body.password || "");
-
-    // --------------------------
-    // Validation
-    // --------------------------
 
     if (!username || !email || !password) {
       return res.status(400).json({
         success: false,
-        error: "Username, email and password are required.",
+        error: "Please fill in every field.",
       });
     }
 
     if (username.length < 3 || username.length > 24) {
       return res.status(400).json({
         success: false,
-        error: "Username must contain between 3 and 24 characters.",
+        error:
+          "Username must contain between 3 and 24 characters.",
       });
     }
 
@@ -95,7 +92,7 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    if (!isValidEmail(email)) {
+    if (!validEmail(email)) {
       return res.status(400).json({
         success: false,
         error: "Please enter a valid email address.",
@@ -105,7 +102,8 @@ router.post("/register", async (req, res) => {
     if (password.length < 8) {
       return res.status(400).json({
         success: false,
-        error: "Password must contain at least 8 characters.",
+        error:
+          "Password must contain at least 8 characters.",
       });
     }
 
@@ -116,45 +114,44 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    // --------------------------
-    // Check existing user
-    // --------------------------
+    /* Check email */
 
-    const existingUser = await User.findOne({
-      $or: [
-        { email },
-        { username },
-      ],
+    const existingEmail = await User.findOne({
+      email,
     });
 
-    if (existingUser) {
-      if (existingUser.email === email) {
-        return res.status(409).json({
-          success: false,
-          error: "An account with this email already exists.",
-        });
-      }
-
-      if (
-        existingUser.username.toLowerCase() ===
-        username.toLowerCase()
-      ) {
-        return res.status(409).json({
-          success: false,
-          error: "This username is already taken.",
-        });
-      }
+    if (existingEmail) {
+      return res.status(409).json({
+        success: false,
+        error:
+          "An account with this email already exists.",
+      });
     }
 
-    // --------------------------
-    // Hash password
-    // --------------------------
+    /* Check username */
 
-    const passwordHash = await bcrypt.hash(password, 12);
+    const existingUsername = await User.findOne({
+      username: {
+        $regex: `^${username}$`,
+        $options: "i",
+      },
+    });
 
-    // --------------------------
-    // Create user
-    // --------------------------
+    if (existingUsername) {
+      return res.status(409).json({
+        success: false,
+        error: "This username is already taken.",
+      });
+    }
+
+    /* Hash password */
+
+    const passwordHash = await bcrypt.hash(
+      password,
+      12
+    );
+
+    /* Create user */
 
     const user = await User.create({
       username,
@@ -162,172 +159,179 @@ router.post("/register", async (req, res) => {
       passwordHash,
     });
 
-    // --------------------------
-    // Create session token
-    // --------------------------
+    /* Create session */
 
     const token = createToken(user);
+
+    res.cookie(
+      COOKIE_NAME,
+      token,
+      COOKIE_OPTIONS
+    );
 
     return res.status(201).json({
       success: true,
       message: "Account created successfully.",
-      token,
-      user: safeUser(user),
+      user: publicUser(user),
     });
   } catch (error) {
     console.error("REGISTER ERROR:", error);
 
-    // MongoDB duplicate key
     if (error.code === 11000) {
       return res.status(409).json({
         success: false,
-        error: "An account with this information already exists.",
+        error:
+          "An account with this information already exists.",
       });
     }
 
     return res.status(500).json({
       success: false,
-      error: "Unable to create account.",
+      error:
+        "Something went wrong while creating your account.",
     });
   }
 });
 
-// ==============================
-// LOGIN
-// POST /api/auth/login
-// ==============================
+/* =====================================================
+   LOGIN
+   POST /api/auth/login
+===================================================== */
 
 router.post("/login", async (req, res) => {
   try {
-    const email = normalizeEmail(req.body.email);
+    const email = cleanEmail(req.body.email);
     const password = String(req.body.password || "");
 
     if (!email || !password) {
       return res.status(400).json({
         success: false,
-        error: "Email and password are required.",
+        error:
+          "Email and password are required.",
       });
     }
 
-    // --------------------------
-    // Find user
-    // --------------------------
-
-    const user = await User.findOne({ email });
+    const user = await User.findOne({
+      email,
+    });
 
     if (!user) {
       return res.status(401).json({
         success: false,
-        error: "Invalid email or password.",
+        error:
+          "Invalid email or password.",
       });
     }
 
-    // --------------------------
-    // Check password
-    // --------------------------
+    const passwordCorrect =
+      await bcrypt.compare(
+        password,
+        user.passwordHash
+      );
 
-    const passwordMatches = await bcrypt.compare(
-      password,
-      user.passwordHash
-    );
-
-    if (!passwordMatches) {
+    if (!passwordCorrect) {
       return res.status(401).json({
         success: false,
-        error: "Invalid email or password.",
+        error:
+          "Invalid email or password.",
       });
     }
-
-    // --------------------------
-    // Update last login
-    // --------------------------
 
     user.lastLoginAt = new Date();
 
     await user.save();
 
-    // --------------------------
-    // Create token
-    // --------------------------
-
     const token = createToken(user);
+
+    res.cookie(
+      COOKIE_NAME,
+      token,
+      COOKIE_OPTIONS
+    );
 
     return res.json({
       success: true,
-      message: "Login successful.",
-      token,
-      user: safeUser(user),
+      message: "Logged in successfully.",
+      user: publicUser(user),
     });
   } catch (error) {
     console.error("LOGIN ERROR:", error);
 
     return res.status(500).json({
       success: false,
-      error: "Unable to login.",
+      error:
+        "Something went wrong while logging in.",
     });
   }
 });
 
-// ==============================
-// GET CURRENT USER
-// GET /api/auth/me
-// ==============================
+/* =====================================================
+   CURRENT USER
+   GET /api/auth/me
+===================================================== */
 
 router.get("/me", async (req, res) => {
   try {
-    const authHeader = req.headers.authorization;
-
-    if (!authHeader) {
-      return res.status(401).json({
-        success: false,
-        error: "Not authenticated.",
-      });
-    }
-
-    const token = authHeader.startsWith("Bearer ")
-      ? authHeader.substring(7)
-      : null;
+    const token =
+      req.cookies[COOKIE_NAME];
 
     if (!token) {
       return res.status(401).json({
         success: false,
-        error: "Invalid authorization header.",
+        authenticated: false,
       });
     }
 
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(
+      token,
+      JWT_SECRET
+    );
 
-    const user = await User.findById(decoded.sub);
+    const user = await User.findById(
+      decoded.sub
+    );
 
     if (!user) {
+      res.clearCookie(
+        COOKIE_NAME,
+        COOKIE_OPTIONS
+      );
+
       return res.status(401).json({
         success: false,
-        error: "User no longer exists.",
+        authenticated: false,
       });
     }
 
     return res.json({
       success: true,
-      user: safeUser(user),
+      authenticated: true,
+      user: publicUser(user),
     });
   } catch (error) {
+    res.clearCookie(
+      COOKIE_NAME,
+      COOKIE_OPTIONS
+    );
+
     return res.status(401).json({
       success: false,
-      error: "Invalid or expired session.",
+      authenticated: false,
     });
   }
 });
 
-// ==============================
-// LOGOUT
-// ==============================
-//
-// JWT is stateless, so the client removes
-// the token. This endpoint exists mainly
-// for a clean API.
-// ==============================
+/* =====================================================
+   LOGOUT
+   POST /api/auth/logout
+===================================================== */
 
 router.post("/logout", async (req, res) => {
+  res.clearCookie(
+    COOKIE_NAME,
+    COOKIE_OPTIONS
+  );
+
   return res.json({
     success: true,
     message: "Logged out successfully.",
