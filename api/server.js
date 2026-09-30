@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 
 require("dotenv").config();
+require("dotenv").config({ path: ".env.development.local" });
 
 const authRoutes = require("./auth");
 const projectsRoutes = require("./projects");
@@ -148,3 +149,11 @@ app.use((error, req, res, next) => {
 });
 
 module.exports = app;
+
+if (require.main === module) {
+  const port = Number(process.env.PORT) || 3000;
+
+  app.listen(port, () => {
+    console.log(`BuildForge server listening on port ${port}`);
+  });
+}
