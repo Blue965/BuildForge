@@ -1,140 +1,336 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BuildForge | Roblox AI Studio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/styles.css" />
-  </head>
-  <body>
-    <div class="page-shell">
-      <header class="topbar">
-        <div class="brand-wrap">
-          <div class="brand-badge">BF</div>
-          <div class="brand-copy">
-            <span class="brand-name">BuildForge</span>
-            <span class="brand-sub">Studio AI</span>
-          </div>
-        </div>
+* {
+  box-sizing: border-box;
+}
 
-        <nav class="nav-links">
-          <a href="#features">Fonctionnalités</a>
-          <a href="#studio">Studio</a>
-          <a href="#pricing">Tarifs</a>
-        </nav>
+:root {
+  --bg: #080b12;
+  --panel: #10151f;
+  --panel-light: #151c28;
+  --border: rgba(255, 255, 255, 0.08);
+  --blue: #3b82f6;
+  --blue-light: #60a5fa;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+}
 
-        <button class="ghost-btn">Se connecter</button>
-      </header>
+html {
+  scroll-behavior: smooth;
+}
 
-      <main class="hero">
-        <section class="hero-copy">
-          <div class="badge-pill">⚡ IA pour créer Roblox Studio</div>
-          <h1>Crée tes mondes, UI, scripts et animations en une seule plateforme.</h1>
-          <p>
-            BuildForge aide les créateurs Roblox à générer des modèles, des interfaces,
-            des animations et des systèmes via une IA puissante et intuitive.
-          </p>
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, Arial, sans-serif;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(59, 130, 246, 0.14), transparent 35%),
+    var(--bg);
+  color: var(--text);
+}
 
-          <div class="cta-row">
-            <button class="primary-btn">Commencer</button>
-            <button class="secondary-btn">Voir la démo</button>
-          </div>
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
 
-          <div class="mini-stats">
-            <div>
-              <strong>12k+</strong>
-              <span>Créateurs</span>
-            </div>
-            <div>
-              <strong>4.9/5</strong>
-              <span>Note</span>
-            </div>
-            <div>
-              <strong>AI</strong>
-              <span>Live designer</span>
-            </div>
-          </div>
-        </section>
+button {
+  cursor: pointer;
+}
 
-        <section class="auth-panel">
-          <div class="panel-card">
-            <div class="panel-header">
-              <p class="eyebrow">Bienvenue</p>
-              <h2>Connecte-toi</h2>
-            </div>
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
-            <div class="provider-list">
-              <button class="provider-btn roblox-btn" data-provider="roblox">
-                <span>🎮</span>
-                Continuer avec Roblox
-              </button>
-              <button class="provider-btn google-btn" data-provider="google">
-                <span>🔵</span>
-                Continuer avec Google
-              </button>
-            </div>
+#app {
+  min-height: 100vh;
+}
 
-            <div class="divider"><span>ou</span></div>
+.page-shell {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+}
 
-            <form id="email-form" class="email-form">
-              <label>
-                <span>Email</span>
-                <input type="email" id="emailInput" placeholder="prenom@buildforge.io" required />
-              </label>
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 20px;
+  background: rgba(16, 21, 31, 0.82);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  backdrop-filter: blur(14px);
+}
 
-              <label>
-                <span>Nom d’utilisateur</span>
-                <input type="text" id="usernameInput" placeholder="BuildBoss" />
-              </label>
+.brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-              <label>
-                <span>Mot de passe</span>
-                <input type="password" id="passwordInput" placeholder="••••••••" required />
-              </label>
+.brand-badge {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--blue);
+  color: white;
+  font-weight: 800;
+}
 
-              <button type="submit" class="submit-btn">Créer mon compte</button>
-            </form>
-          </div>
-        </section>
-      </main>
+.brand-name {
+  font-size: 18px;
+  font-weight: 800;
+}
 
-      <section id="features" class="feature-section">
-        <div class="section-title">
-          <p>Tout ce qu’il faut</p>
-          <h3>Des outils IA pour tout construire</h3>
-        </div>
+.brand-sub {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 2px;
+}
 
-        <div class="feature-grid">
-          <article class="feature-card card-purple">
-            <span class="emoji">🏗️</span>
-            <h4>Build 3D</h4>
-            <p>Crée des modèles, décors et environnements à partir de concepts.</p>
-          </article>
+.nav-links {
+  display: flex;
+  gap: 24px;
+}
 
-          <article class="feature-card card-orange">
-            <span class="emoji">✨</span>
-            <h4>Animation IA</h4>
-            <p>Génère des mouvements fluides pour personnages, caméras et props.</p>
-          </article>
+.nav-links a {
+  color: var(--muted);
+  font-size: 14px;
+}
 
-          <article class="feature-card card-blue">
-            <span class="emoji">🧩</span>
-            <h4>UI Builder</h4>
-            <p>Conçois des interfaces de jeu et menus modernisés en un instant.</p>
-          </article>
+.nav-links a:hover {
+  color: white;
+}
 
-          <article class="feature-card card-green">
-            <span class="emoji">⚙️</span>
-            <h4>Scripts</h4>
-            <p>Crée des systèmes de gameplay, inventaires et événements Roblox.</p>
-          </article>
-        </div>
-      </section>
-    </div>
+.hero {
+  min-height: 720px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: 60px;
+}
 
-    <script src="/app.js"></script>
-  </body>
-</html>
+.hero-copy h1 {
+  max-width: 760px;
+  margin: 18px 0;
+  font-size: clamp(42px, 6vw, 76px);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+
+.hero-copy p {
+  max-width: 650px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.badge-pill {
+  display: inline-flex;
+  padding: 8px 12px;
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: 8px;
+  background: rgba(59, 130, 246, 0.08);
+  color: var(--blue-light);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cta-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.btn,
+.primary-btn,
+.secondary-btn,
+.ghost-btn,
+.provider-btn,
+.submit-btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 13px 18px;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.primary-btn,
+.submit-btn {
+  background: var(--blue);
+  color: white;
+}
+
+.primary-btn:hover,
+.submit-btn:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.secondary-btn,
+.ghost-btn {
+  background: var(--panel-light);
+  border: 1px solid var(--border);
+  color: white;
+}
+
+.auth-panel {
+  display: flex;
+  justify-content: center;
+}
+
+.panel-card {
+  width: min(100%, 460px);
+  padding: 28px;
+  background: rgba(16, 21, 31, 0.9);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--blue-light);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.provider-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.provider-btn {
+  width: 100%;
+  background: var(--panel-light);
+  border: 1px solid var(--border);
+  color: white;
+}
+
+.provider-btn:hover {
+  border-color: rgba(96, 165, 250, 0.4);
+}
+
+.divider {
+  margin: 22px 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.email-form {
+  display: grid;
+  gap: 14px;
+}
+
+.email-form label,
+.form-group {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.email-form input,
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  outline: none;
+  background: #0b1018;
+  color: white;
+}
+
+.email-form input:focus {
+  border-color: var(--blue);
+}
+
+.feature-section {
+  padding: 80px 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.section-title p {
+  color: var(--blue-light);
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.section-title h3 {
+  font-size: 38px;
+  margin: 10px 0;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.feature-card {
+  padding: 22px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.feature-card h4 {
+  margin: 15px 0 8px;
+}
+
+.feature-card p {
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 80px 0;
+  }
+
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nav-links {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .page-shell {
+    padding: 14px;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-row {
+    flex-direction: column;
+  }
+}
