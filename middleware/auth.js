@@ -1,22 +1,48 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 
-const JWT_SECRET = process.env.JWT_SECRET || 'buildforge-dev-secret-change-me';
+const JWT_SECRET = process.env.JWT_SECRET;
 
-const authMiddleware = (req, res, next) => {
-  const authHeader = req.headers.authorization || '';
-  const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
-
-  if (!token) {
-    return res.status(401).json({ error: 'Token manquant' });
-  }
-
+async function authMiddleware(req, res, next) {
   try {
+    if (!JWT_SECRET) {
+      return res.status(500).json({
+        success: false,
+        error: "Authentication system is not configured.",
+      });
+    }
+
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({
+        success: false,
+        error: "Authentication required.",
+      });
+    }
+
+    const token = authHeader.substring(7);
+
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded;
+
+    const user = await User.findById(decoded.sub);
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        error: "User not found.",
+      });
+    }
+
+    req.user = user;
+
     next();
   } catch (error) {
-    return res.status(401).json({ error: 'Token invalide' });
+    return res.status(401).json({
+      success: false,
+      error: "Invalid or expired session.",
+    });
   }
-};
+}
 
-module.exports = { authMiddleware };
+module.exports = authMiddleware;
