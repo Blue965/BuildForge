@@ -1,25 +1,17 @@
 {
   "name": "buildforge",
   "version": "1.0.0",
-  "description": "BuildForge — AI-powered creation hub for Roblox Studio",
+  "private": true,
   "main": "api/server.js",
   "scripts": {
     "start": "node api/server.js"
   },
-  "keywords": [
-    "roblox",
-    "studio",
-    "ai",
-    "buildforge",
-    "game-development"
-  ],
-  "author": "Blue965",
-  "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.7.3"
+    "mongoose": "^8.9.5"
   }
 }
