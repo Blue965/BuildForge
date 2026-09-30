@@ -1,252 +1,35 @@
-const express = require('express');
-const cors = require('cors');
-const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
-const path = require('path');
-require('dotenv').config();
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-const JWT_SECRET = process.env.JWT_SECRET || 'buildforge-dev-secret-change-me';
+  <title>BuildForge | Roblox AI Studio</title>
+  <meta
+    name="description"
+    content="BuildForge est une plateforme IA pour créer des jeux, systèmes, UI, scripts et mondes Roblox."
+  >
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-const userSchema = new mongoose.Schema({
-  provider: { type: String, required: true },
-  providerId: { type: String },
-  email: { type: String, lowercase: true },
-  username: { type: String, required: true },
-  avatar: { type: String },
-  createdAt: { type: Date, default: Date.now }
-});
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
 
-const User = mongoose.models.User || mongoose.model('User', userSchema);
+  <link rel="stylesheet" href="/styles.css">
+</head>
 
-const createToken = (user) => {
-  return jwt.sign(
-    {
-      id: user._id || user.id,
-      username: user.username,
-      email: user.email,
-      provider: user.provider
-    },
-    JWT_SECRET,
-    { expiresIn: '7d' }
-  );
-};
+<body>
+  <div id="app"></div>
 
-const authMiddleware = (req, res, next) => {
-  const authHeader = req.headers.authorization || '';
-  const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
+  <noscript>
+    <div style="padding:40px;text-align:center;font-family:Arial">
+      BuildForge nécessite JavaScript pour fonctionner.
+    </div>
+  </noscript>
 
-  if (!token) {
-    return res.status(401).json({ error: 'Token manquant' });
-  }
-
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded;
-    next();
-  } catch (error) {
-    return res.status(401).json({ error: 'Token invalide' });
-  }
-};
-
-app.get('/api/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    app: 'BuildForge',
-    message: 'API prête à construire des mondes Roblox'
-  });
-});
-
-app.get('/api/auth/providers', (req, res) => {
-  res.json({
-    providers: [
-      { name: 'Google', enabled: Boolean(process.env.GOOGLE_CLIENT_ID) },
-      { name: 'Roblox', enabled: Boolean(process.env.ROBLOX_CLIENT_ID) },
-      { name: 'Email', enabled: true }
-    ]
-  });
-});
-
-app.post('/api/auth/google', async (req, res) => {
-  const { email, name, avatar } = req.body || {};
-
-  if (!email || !name) {
-    return res.status(400).json({ error: 'Email et nom requis' });
-  }
-
-  try {
-    const payload = {
-      provider: 'google',
-      providerId: `google_${email}`,
-      email,
-      username: name,
-      avatar: avatar || ''
-    };
-
-    let user = await User.findOne({ email, provider: 'google' });
-    if (!user) {
-      user = await User.create(payload);
-    }
-
-    const token = createToken(user);
-
-    res.json({
-      token,
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        avatar: user.avatar,
-        provider: user.provider
-      }
-    });
-  } catch (error) {
-    res.status(500).json({ error: 'Erreur de création utilisateur Google' });
-  }
-});
-
-app.post('/api/auth/roblox', async (req, res) => {
-  const { username, avatar } = req.body || {};
-
-  if (!username) {
-    return res.status(400).json({ error: 'Nom Roblox requis' });
-  }
-
-  try {
-    const payload = {
-      provider: 'roblox',
-      providerId: `roblox_${username}`,
-      email: `${username}@roblox.local`,
-      username,
-      avatar: avatar || ''
-    };
-
-    let user = await User.findOne({ username, provider: 'roblox' });
-    if (!user) {
-      user = await User.create(payload);
-    }
-
-    const token = createToken(user);
-
-    res.json({
-      token,
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        avatar: user.avatar,
-        provider: user.provider
-      }
-    });
-  } catch (error) {
-    res.status(500).json({ error: 'Erreur de création utilisateur Roblox' });
-  }
-});
-
-app.post('/api/auth/email', async (req, res) => {
-  const { email, password, username } = req.body || {};
-
-  if (!email || !password) {
-    return res.status(400).json({ error: 'Email et mot de passe requis' });
-  }
-
-  const safeUsername = username || email.split('@')[0];
-
-  try {
-    let user = await User.findOne({ email, provider: 'email' });
-    if (!user) {
-      user = await User.create({
-        provider: 'email',
-        providerId: `email_${email}`,
-        email,
-        username: safeUsername,
-        avatar: ''
-      });
-    }
-
-    const token = createToken(user);
-
-    res.json({
-      token,
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        avatar: user.avatar,
-        provider: user.provider
-      }
-    });
-  } catch (error) {
-    res.status(500).json({ error: 'Erreur d’authentification email' });
-  }
-});
-
-app.get('/api/me', authMiddleware, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id);
-    if (!user) {
-      return res.status(404).json({ error: 'Utilisateur introuvable' });
-    }
-
-    res.json({
-      id: user._id,
-      username: user.username,
-      email: user.email,
-      avatar: user.avatar,
-      provider: user.provider
-    });
-  } catch (error) {
-    res.status(500).json({ error: 'Erreur récupération utilisateur' });
-  }
-});
-
-app.get('/api/projects', authMiddleware, (req, res) => {
-  res.json({
-    projects: [
-      {
-        id: 'proj_001',
-        name: 'Sky Harbor',
-        type: 'World',
-        updatedAt: '2026-09-29'
-      },
-      {
-        id: 'proj_002',
-        name: 'Neon Arena',
-        type: 'Game',
-        updatedAt: '2026-09-28'
-      }
-    ]
-  });
-});
-
-if (process.env.MONGODB_URI) {
-  mongoose
-    .connect(process.env.MONGODB_URI)
-    .then(() => {
-      app.listen(PORT, () => {
-        console.log(`BuildForge API running on http://localhost:${PORT}`);
-        console.log('MongoDB connecté');
-      });
-    })
-    .catch((error) => {
-      console.error('Erreur MongoDB :', error.message);
-      app.listen(PORT, () => {
-        console.log(`BuildForge demo mode running on http://localhost:${PORT}`);
-      });
-    });
-} else {
-  app.listen(PORT, () => {
-    console.log(`BuildForge demo mode running on http://localhost:${PORT}`);
-    console.log('MONGODB_URI non configuré, mode démo activé');
-  });
-}
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
