@@ -10,43 +10,74 @@ const usersRoutes = require('./users');
 
 const app = express();
 
+// --------------------------------------------------
+// Middleware
+// --------------------------------------------------
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve frontend
-app.use(express.static(path.join(__dirname, '../public')));
+// --------------------------------------------------
+// Frontend
+// --------------------------------------------------
 
+const publicPath = path.join(__dirname, '../public');
+
+app.use(express.static(publicPath));
+
+// --------------------------------------------------
 // MongoDB
+// --------------------------------------------------
+
+let mongoConnectionPromise = null;
+
 if (process.env.MONGODB_URI) {
-  mongoose
+  mongoConnectionPromise = mongoose
     .connect(process.env.MONGODB_URI)
-    .then(() => console.log('✅ MongoDB connecté'))
-    .catch((err) => {
-      console.error('❌ Erreur MongoDB:', err.message);
+    .then(() => {
+      console.log('MongoDB connected');
+      return true;
+    })
+    .catch((error) => {
+      console.error('MongoDB connection error:', error.message);
+      return false;
     });
 } else {
-  console.warn('⚠️ MONGODB_URI non configuré');
+  console.warn('MONGODB_URI is not configured');
 }
 
-// API routes
-app.use('/api/auth', authRoutes);
-app.use('/api/projects', projectsRoutes);
-app.use('/api/users', usersRoutes);
+// --------------------------------------------------
+// API
+// --------------------------------------------------
 
-// Health check
-app.get('/api/health', (req, res) => {
+app.get('/api/health', async (req, res) => {
   res.json({
     status: 'ok',
     app: 'BuildForge',
-    message: 'API prête à construire des mondes Roblox',
+    message: 'API ready to build Roblox worlds',
+    mongoConfigured: Boolean(process.env.MONGODB_URI),
     mongoConnected: mongoose.connection.readyState === 1
   });
 });
 
+app.use('/api/auth', authRoutes);
+app.use('/api/projects', projectsRoutes);
+app.use('/api/users', usersRoutes);
+
+// --------------------------------------------------
 // Frontend fallback
+// --------------------------------------------------
+
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+  res.sendFile(path.join(publicPath, 'index.html'));
 });
+
+// --------------------------------------------------
+// Vercel export
+// --------------------------------------------------
+
+// IMPORTANT:
+// Do NOT use app.listen() on Vercel.
 
 module.exports = app;
