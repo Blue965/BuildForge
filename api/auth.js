@@ -70,14 +70,18 @@ async function ensureDatabase() {
     return;
   }
 
-  if (!process.env.MONGODB_URI) {
+  const mongoConnectionString =
+    process.env.MONGODB_CONNECTION_STRING ||
+    process.env.MONGODB_URI;
+
+  if (!mongoConnectionString) {
     throw new Error(
-      "MONGODB_URI is not configured."
+      "MONGODB_CONNECTION_STRING is not configured."
     );
   }
 
   await mongoose.connect(
-    process.env.MONGODB_URI,
+    mongoConnectionString,
     {
       serverSelectionTimeoutMS: 10000,
     }

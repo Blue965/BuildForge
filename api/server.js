@@ -50,8 +50,14 @@ app.use(express.static(publicPath));
 let mongoConnectionPromise = null;
 
 async function connectMongoDB() {
-  if (!process.env.MONGODB_URI) {
-    console.error("MONGODB_URI is not configured.");
+  const mongoConnectionString =
+    process.env.MONGODB_CONNECTION_STRING ||
+    process.env.MONGODB_URI;
+
+  if (!mongoConnectionString) {
+    console.error(
+      "MONGODB_CONNECTION_STRING is not configured."
+    );
     return;
   }
 
@@ -61,7 +67,7 @@ async function connectMongoDB() {
 
   if (!mongoConnectionPromise) {
     mongoConnectionPromise = mongoose
-      .connect(process.env.MONGODB_URI, {
+      .connect(mongoConnectionString, {
         serverSelectionTimeoutMS: 10000,
       })
       .then(() => {
