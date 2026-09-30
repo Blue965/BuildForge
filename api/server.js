@@ -13,24 +13,27 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static(path.join(__dirname, '../public')));
 
+// MongoDB
 if (process.env.MONGODB_URI) {
   mongoose
-    .connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    })
+    .connect(process.env.MONGODB_URI)
     .then(() => console.log('✅ MongoDB connecté'))
-    .catch((err) => console.error('❌ Erreur MongoDB:', err.message));
+    .catch((err) => {
+      console.error('❌ Erreur MongoDB:', err.message);
+    });
 } else {
-  console.warn('⚠️ MONGODB_URI non configuré — mode démo actif');
+  console.warn('⚠️ MONGODB_URI non configuré');
 }
 
+// API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectsRoutes);
 app.use('/api/users', usersRoutes);
 
+// Health check
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
@@ -40,14 +43,10 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Frontend
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`\n🚀 BuildForge running on http://localhost:${PORT}`);
-  console.log(`📚 API base: http://localhost:${PORT}/api\n`);
-});
-
+// Export for Vercel
 module.exports = app;
