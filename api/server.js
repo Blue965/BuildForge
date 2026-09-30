@@ -148,3 +148,11 @@ app.use((error, req, res, next) => {
 });
 
 module.exports = app;
+
+if (require.main === module) {
+  const port = Number(process.env.PORT) || 3000;
+
+  app.listen(port, () => {
+    console.log(`BuildForge server listening on port ${port}`);
+  });
+}
