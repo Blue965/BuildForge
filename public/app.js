@@ -1,9 +1,16 @@
 const app = document.getElementById("app");
 
+/* =========================================================
+   BUILDFORGE APPLICATION
+   ========================================================= */
+
 app.innerHTML = `
   <div class="site-container">
 
-    <!-- NAVBAR -->
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
     <header class="navbar">
 
       <a href="#" class="logo">
@@ -14,12 +21,14 @@ app.innerHTML = `
 
         <div class="logo-text">
           Build<span>Forge</span>
+
           <small class="logo-small">
             ROBLOX CREATION PLATFORM
           </small>
         </div>
 
       </a>
+
 
       <nav class="nav-links">
 
@@ -41,11 +50,13 @@ app.innerHTML = `
 
       </nav>
 
-      <div class="nav-actions">
+
+      <div class="nav-actions" id="navActions">
 
         <button
           class="btn btn-primary"
           id="navStart"
+          type="button"
         >
           Open Studio
         </button>
@@ -55,7 +66,10 @@ app.innerHTML = `
     </header>
 
 
-    <!-- HERO -->
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
     <main>
 
       <section class="hero">
@@ -70,6 +84,7 @@ app.innerHTML = `
 
           </div>
 
+
           <h1>
 
             Build your
@@ -80,6 +95,7 @@ app.innerHTML = `
 
           </h1>
 
+
           <p class="hero-description">
 
             BuildForge gives creators a playful workspace
@@ -89,23 +105,28 @@ app.innerHTML = `
 
           </p>
 
+
           <div class="hero-actions">
 
             <button
               class="btn btn-primary"
               id="heroStart"
+              type="button"
             >
               Start Creating
             </button>
 
+
             <button
               class="btn btn-secondary"
               id="heroExplore"
+              type="button"
             >
               Explore Studio
             </button>
 
           </div>
+
 
           <div class="hero-note">
 
@@ -119,6 +140,7 @@ app.innerHTML = `
 
 
         <!-- CARTOONY WORLD -->
+
         <div class="hero-visual">
 
           <div class="world-card">
@@ -129,6 +151,7 @@ app.innerHTML = `
 
             <div class="world-cloud world-cloud-two"></div>
 
+
             <div class="tree tree-one">
 
               <div class="tree-top"></div>
@@ -136,6 +159,7 @@ app.innerHTML = `
               <div class="tree-trunk"></div>
 
             </div>
+
 
             <div class="tree tree-two">
 
@@ -145,17 +169,20 @@ app.innerHTML = `
 
             </div>
 
+
             <div class="world-ground"></div>
 
             <div class="world-dirt"></div>
 
             <div class="world-platform"></div>
 
+
             <div class="cube cube-blue"></div>
 
             <div class="cube cube-yellow"></div>
 
             <div class="cube cube-orange"></div>
+
 
             <div class="ai-mascot">
 
@@ -178,7 +205,10 @@ app.innerHTML = `
       </section>
 
 
-      <!-- FEATURES -->
+      <!-- =====================================================
+           FEATURES
+      ====================================================== -->
+
       <section
         class="section"
         id="features"
@@ -296,7 +326,10 @@ app.innerHTML = `
       </section>
 
 
-      <!-- STUDIO -->
+      <!-- =====================================================
+           STUDIO
+      ====================================================== -->
+
       <section
         class="studio-section"
         id="studio"
@@ -347,40 +380,49 @@ app.innerHTML = `
                 CREATE
               </div>
 
+
               <div class="tool active">
                 ▦
                 Game
               </div>
+
 
               <div class="tool">
                 &lt;/&gt;
                 Scripts
               </div>
 
+
               <div class="tool">
                 ◈
                 Interface
               </div>
+
 
               <div class="tool">
                 ◒
                 World
               </div>
 
+
               <div class="tool">
                 ◇
                 Assets
               </div>
 
+
               <br>
+
 
               <div class="tool-title">
                 PROJECT
               </div>
 
+
               <div class="tool">
                 Project
               </div>
+
 
               <div class="tool">
                 Settings
@@ -395,15 +437,21 @@ app.innerHTML = `
 
               <div class="canvas-platform"></div>
 
+
               <div class="canvas-building">
 
-                <div class="canvas-window canvas-window-one"></div>
+                <div
+                  class="canvas-window canvas-window-one"
+                ></div>
 
-                <div class="canvas-window canvas-window-two"></div>
+                <div
+                  class="canvas-window canvas-window-two"
+                ></div>
 
                 <div class="canvas-door"></div>
 
               </div>
+
 
               <div class="canvas-roof"></div>
 
@@ -444,15 +492,19 @@ app.innerHTML = `
                 function Building.new()
 
                 <br>
+
                 &nbsp;&nbsp;return {
 
                 <br>
+
                 &nbsp;&nbsp;&nbsp;&nbsp;Name = "House"
 
                 <br>
+
                 &nbsp;&nbsp;}
 
                 <br>
+
                 end
 
               </div>
@@ -464,7 +516,10 @@ app.innerHTML = `
                   Ask BuildForge...
                 </div>
 
-                <button class="ai-send">
+                <button
+                  class="ai-send"
+                  type="button"
+                >
                   →
                 </button>
 
@@ -479,7 +534,10 @@ app.innerHTML = `
       </section>
 
 
-      <!-- HOW IT WORKS -->
+      <!-- =====================================================
+           HOW IT WORKS
+      ====================================================== -->
+
       <section
         class="section"
         id="how"
@@ -563,7 +621,10 @@ app.innerHTML = `
       </section>
 
 
-      <!-- CREATOR -->
+      <!-- =====================================================
+           CREATORS
+      ====================================================== -->
+
       <section
         class="section"
         id="creators"
@@ -577,10 +638,12 @@ app.innerHTML = `
               MADE FOR CREATORS
             </div>
 
+
             <h2>
               Your ideas deserve
               a place to grow.
             </h2>
+
 
             <p>
               BuildForge is designed around the way
@@ -641,11 +704,17 @@ app.innerHTML = `
 
           <div class="creator-art">
 
-            <div class="creator-cube creator-cube-one"></div>
+            <div
+              class="creator-cube creator-cube-one"
+            ></div>
 
-            <div class="creator-cube creator-cube-two"></div>
+            <div
+              class="creator-cube creator-cube-two"
+            ></div>
 
-            <div class="creator-cube creator-cube-three"></div>
+            <div
+              class="creator-cube creator-cube-three"
+            ></div>
 
           </div>
 
@@ -654,7 +723,10 @@ app.innerHTML = `
       </section>
 
 
-      <!-- FINAL CTA -->
+      <!-- =====================================================
+           FINAL CTA
+      ====================================================== -->
+
       <section class="final-cta">
 
         <h2>
@@ -666,9 +738,11 @@ app.innerHTML = `
           something you can actually build.
         </p>
 
+
         <button
           class="btn btn-yellow"
           id="finalStart"
+          type="button"
         >
           Open BuildForge Studio
         </button>
@@ -678,7 +752,10 @@ app.innerHTML = `
     </main>
 
 
-    <!-- FOOTER -->
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
     <footer class="footer">
 
       <div class="footer-inner">
@@ -727,7 +804,10 @@ app.innerHTML = `
   </div>
 
 
-  <!-- AUTH MODAL -->
+  <!-- =======================================================
+       AUTH MODAL
+  ======================================================== -->
+
   <div
     class="modal-overlay"
     id="authModal"
@@ -739,19 +819,22 @@ app.innerHTML = `
 
         <div>
 
-          <h2>
+          <h2 id="authTitle">
             Welcome to BuildForge
           </h2>
 
-          <p>
+          <p id="authSubtitle">
             Create your creator account.
           </p>
 
         </div>
 
+
         <button
           class="modal-close"
           id="closeModal"
+          type="button"
+          aria-label="Close"
         >
           ×
         </button>
@@ -759,10 +842,85 @@ app.innerHTML = `
       </div>
 
 
+      <!-- AUTH MODE SWITCH -->
+
+      <div
+        class="auth-switch"
+        style="
+          display:flex;
+          gap:8px;
+          margin-bottom:20px;
+        "
+      >
+
+        <button
+          type="button"
+          id="registerMode"
+          class="btn btn-primary"
+          style="flex:1;"
+        >
+          Create Account
+        </button>
+
+
+        <button
+          type="button"
+          id="loginMode"
+          class="btn btn-secondary"
+          style="flex:1;"
+        >
+          Login
+        </button>
+
+      </div>
+
+
+      <!-- AUTH ERROR -->
+
+      <div
+        id="authError"
+        style="
+          display:none;
+          margin-bottom:16px;
+          padding:12px 14px;
+          border-radius:12px;
+          background:#fff0f0;
+          color:#d93025;
+          font-size:14px;
+          font-weight:600;
+        "
+      ></div>
+
+
+      <!-- AUTH FORM -->
+
       <form
         class="auth-form"
-        id="emailForm"
+        id="authForm"
       >
+
+        <!-- USERNAME -->
+
+        <label
+          class="form-field"
+          id="usernameField"
+        >
+
+          Username
+
+          <input
+            type="text"
+            id="usernameInput"
+            placeholder="Builder"
+            minlength="3"
+            maxlength="24"
+            autocomplete="username"
+          >
+
+        </label>
+
+
+        <!-- EMAIL -->
 
         <label class="form-field">
 
@@ -773,23 +931,13 @@ app.innerHTML = `
             id="emailInput"
             placeholder="you@example.com"
             required
+            autocomplete="email"
           >
 
         </label>
 
 
-        <label class="form-field">
-
-          Username
-
-          <input
-            type="text"
-            id="usernameInput"
-            placeholder="Builder"
-          >
-
-        </label>
-
+        <!-- PASSWORD -->
 
         <label class="form-field">
 
@@ -799,14 +947,19 @@ app.innerHTML = `
             type="password"
             id="passwordInput"
             placeholder="••••••••"
+            minlength="8"
             required
+            autocomplete="current-password"
           >
 
         </label>
 
 
+        <!-- SUBMIT -->
+
         <button
           class="btn btn-primary auth-submit"
+          id="authSubmit"
           type="submit"
         >
           Create Account
@@ -819,187 +972,1063 @@ app.innerHTML = `
   </div>
 
 
+  <!-- =======================================================
+       TOAST
+  ======================================================== -->
+
   <div
     class="toast"
     id="toast"
+    role="status"
+    aria-live="polite"
   ></div>
 `;
 
 
 /* =========================================================
-   HELPERS
+   DOM REFERENCES
    ========================================================= */
 
-const modal = document.getElementById("authModal");
-const toast = document.getElementById("toast");
+const modal =
+  document.getElementById("authModal");
 
-function openAuth() {
-  modal.classList.add("open");
-}
+const toast =
+  document.getElementById("toast");
 
-function closeAuth() {
-  modal.classList.remove("open");
-}
+const authForm =
+  document.getElementById("authForm");
+
+const authTitle =
+  document.getElementById("authTitle");
+
+const authSubtitle =
+  document.getElementById("authSubtitle");
+
+const authSubmit =
+  document.getElementById("authSubmit");
+
+const authError =
+  document.getElementById("authError");
+
+const usernameField =
+  document.getElementById("usernameField");
+
+const usernameInput =
+  document.getElementById("usernameInput");
+
+const emailInput =
+  document.getElementById("emailInput");
+
+const passwordInput =
+  document.getElementById("passwordInput");
+
+const registerMode =
+  document.getElementById("registerMode");
+
+const loginMode =
+  document.getElementById("loginMode");
+
+const navActions =
+  document.getElementById("navActions");
+
+
+/* =========================================================
+   AUTH STATE
+   ========================================================= */
+
+let authMode = "register";
+
+let currentUser = null;
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+let toastTimeout = null;
 
 function showToast(message) {
+
+  if (!toast) {
+    return;
+  }
+
   toast.textContent = message;
 
   toast.classList.add("show");
 
-  setTimeout(() => {
+  clearTimeout(toastTimeout);
+
+  toastTimeout = setTimeout(() => {
+
     toast.classList.remove("show");
-  }, 3000);
+
+  }, 3500);
 }
 
 
 /* =========================================================
-   BUTTONS
+   AUTH ERROR
    ========================================================= */
 
-document
-  .getElementById("navStart")
-  ?.addEventListener("click", openAuth);
+function showAuthError(message) {
 
-document
-  .getElementById("heroStart")
-  ?.addEventListener("click", openAuth);
-
-document
-  .getElementById("finalStart")
-  ?.addEventListener("click", openAuth);
-
-
-document
-  .getElementById("heroExplore")
-  ?.addEventListener("click", () => {
-
-    document
-      .getElementById("studio")
-      ?.scrollIntoView({
-        behavior: "smooth"
-      });
-
-  });
-
-
-document
-  .getElementById("closeModal")
-  ?.addEventListener("click", closeAuth);
-
-
-modal?.addEventListener("click", (event) => {
-
-  if (event.target === modal) {
-    closeAuth();
+  if (!authError) {
+    return;
   }
 
-});
+  authError.textContent = message;
+
+  authError.style.display = "block";
+}
 
 
-document.addEventListener("keydown", (event) => {
+function clearAuthError() {
 
-  if (event.key === "Escape") {
-    closeAuth();
+  if (!authError) {
+    return;
   }
 
-});
+  authError.textContent = "";
+
+  authError.style.display = "none";
+}
 
 
 /* =========================================================
-   AUTH
+   AUTH MODAL
    ========================================================= */
 
-document
-  .getElementById("emailForm")
-  ?.addEventListener("submit", async (event) => {
+function openAuth(mode = "register") {
 
-    event.preventDefault();
+  setAuthMode(mode);
 
-    const email =
-      document
-        .getElementById("emailInput")
-        .value
-        .trim();
+  clearAuthError();
 
-    const username =
-      document
-        .getElementById("usernameInput")
-        .value
-        .trim();
+  if (modal) {
+    modal.classList.add("open");
+  }
 
-    const password =
-      document
-        .getElementById("passwordInput")
-        .value;
+  setTimeout(() => {
+
+    if (authMode === "login") {
+      emailInput?.focus();
+    } else {
+      usernameInput?.focus();
+    }
+
+  }, 100);
+}
 
 
-    try {
+function closeAuth() {
 
-      showToast("Creating your BuildForge account...");
+  if (!modal) {
+    return;
+  }
+
+  modal.classList.remove("open");
+
+  clearAuthError();
+
+  if (authForm) {
+    authForm.reset();
+  }
+}
 
 
-      const response = await fetch(
-        "/api/auth/email",
+/* =========================================================
+   AUTH MODE
+   ========================================================= */
+
+function setAuthMode(mode) {
+
+  authMode =
+    mode === "login"
+      ? "login"
+      : "register";
+
+
+  clearAuthError();
+
+
+  if (authMode === "login") {
+
+    authTitle.textContent =
+      "Welcome back";
+
+    authSubtitle.textContent =
+      "Login to your BuildForge account.";
+
+    authSubmit.textContent =
+      "Login";
+
+    usernameField.style.display =
+      "none";
+
+    usernameInput.required = false;
+
+    passwordInput.autocomplete =
+      "current-password";
+
+
+    registerMode.className =
+      "btn btn-secondary";
+
+    loginMode.className =
+      "btn btn-primary";
+
+  } else {
+
+    authTitle.textContent =
+      "Create your BuildForge account";
+
+    authSubtitle.textContent =
+      "Start building your Roblox ideas.";
+
+    authSubmit.textContent =
+      "Create Account";
+
+    usernameField.style.display =
+      "flex";
+
+    usernameInput.required = true;
+
+    passwordInput.autocomplete =
+      "new-password";
+
+
+    registerMode.className =
+      "btn btn-primary";
+
+    loginMode.className =
+      "btn btn-secondary";
+
+  }
+}
+
+
+/* =========================================================
+   API — REGISTER
+   ========================================================= */
+
+async function register(
+  username,
+  email,
+  password
+) {
+
+  const response =
+    await fetch(
+      "/api/auth/register",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        credentials: "include",
+
+        body: JSON.stringify({
+          username,
+          email,
+          password
+        })
+      }
+    );
+
+
+  let data;
+
+  try {
+
+    data =
+      await response.json();
+
+  } catch {
+
+    throw new Error(
+      "The server returned an invalid response."
+    );
+
+  }
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      data.error ||
+      "Unable to create your account."
+    );
+
+  }
+
+
+  return data;
+}
+
+
+/* =========================================================
+   API — LOGIN
+   ========================================================= */
+
+async function login(
+  email,
+  password
+) {
+
+  const response =
+    await fetch(
+      "/api/auth/login",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        credentials: "include",
+
+        body: JSON.stringify({
+          email,
+          password
+        })
+      }
+    );
+
+
+  let data;
+
+  try {
+
+    data =
+      await response.json();
+
+  } catch {
+
+    throw new Error(
+      "The server returned an invalid response."
+    );
+
+  }
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      data.error ||
+      "Unable to login."
+    );
+
+  }
+
+
+  return data;
+}
+
+
+/* =========================================================
+   API — CURRENT USER
+   ========================================================= */
+
+async function getCurrentUser() {
+
+  try {
+
+    const response =
+      await fetch(
+        "/api/auth/me",
         {
-          method: "POST",
+          method: "GET",
+
+          credentials: "include",
 
           headers: {
-            "Content-Type":
+            Accept:
               "application/json"
-          },
-
-          body: JSON.stringify({
-            email,
-            username,
-            password
-          })
+          }
         }
       );
 
 
-      const data =
-        await response.json();
+    if (!response.ok) {
+      return null;
+    }
 
 
-      if (!response.ok) {
-        throw new Error(
-          data.error ||
-          "Something went wrong."
-        );
-      }
+    const data =
+      await response.json();
 
 
-      if (data.token) {
+    if (
+      !data.success ||
+      !data.authenticated ||
+      !data.user
+    ) {
 
-        localStorage.setItem(
-          "buildforge_token",
-          data.token
-        );
+      return null;
 
-      }
-
-
-      closeAuth();
+    }
 
 
-      showToast(
-        `Welcome to BuildForge${
-          data.user?.username
-            ? `, ${data.user.username}`
-            : ""
-        }!`
+    return data.user;
+
+  } catch (error) {
+
+    console.error(
+      "AUTH CHECK ERROR:",
+      error
+    );
+
+    return null;
+
+  }
+}
+
+
+/* =========================================================
+   API — LOGOUT
+   ========================================================= */
+
+async function logout() {
+
+  try {
+
+    const response =
+      await fetch(
+        "/api/auth/logout",
+        {
+          method: "POST",
+
+          credentials: "include",
+
+          headers: {
+            Accept:
+              "application/json"
+          }
+        }
       );
 
 
-    } catch (error) {
+    if (!response.ok) {
 
-      console.error(error);
-
-      showToast(
-        error.message ||
-        "Unable to create your account."
+      throw new Error(
+        "Logout failed."
       );
 
     }
 
+
+    currentUser = null;
+
+    updateNavbar();
+
+    showToast(
+      "You have been logged out."
+    );
+
+  } catch (error) {
+
+    console.error(
+      "LOGOUT ERROR:",
+      error
+    );
+
+    showToast(
+      "Unable to logout."
+    );
+
+  }
+}
+
+
+/* =========================================================
+   NAVBAR — LOGGED OUT
+   ========================================================= */
+
+function renderLoggedOutNavbar() {
+
+  navActions.innerHTML = `
+    <button
+      class="btn btn-primary"
+      id="navStart"
+      type="button"
+    >
+      Open Studio
+    </button>
+  `;
+
+
+  document
+    .getElementById("navStart")
+    ?.addEventListener(
+      "click",
+      () => openAuth("register")
+    );
+}
+
+
+/* =========================================================
+   NAVBAR — LOGGED IN
+   ========================================================= */
+
+function renderLoggedInNavbar() {
+
+  const username =
+    currentUser?.username ||
+    "Creator";
+
+
+  navActions.innerHTML = `
+    <div
+      class="buildforge-user"
+      style="
+        display:flex;
+        align-items:center;
+        gap:10px;
+      "
+    >
+
+      <div
+        class="buildforge-user-avatar"
+        style="
+          width:38px;
+          height:38px;
+          border-radius:12px;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          background:#3b82f6;
+          color:white;
+          font-weight:800;
+          box-shadow:0 5px 0 #2563eb;
+        "
+      >
+        ${escapeHtml(
+          username
+            .charAt(0)
+            .toUpperCase()
+        )}
+      </div>
+
+
+      <div
+        style="
+          display:flex;
+          flex-direction:column;
+          line-height:1.1;
+        "
+      >
+
+        <strong
+          style="
+            font-size:14px;
+          "
+        >
+          ${escapeHtml(username)}
+        </strong>
+
+        <button
+          id="logoutButton"
+          type="button"
+          style="
+            border:0;
+            padding:2px 0;
+            background:none;
+            cursor:pointer;
+            text-align:left;
+            color:#718096;
+            font-size:12px;
+          "
+        >
+          Logout
+        </button>
+
+      </div>
+
+    </div>
+  `;
+
+
+  document
+    .getElementById("logoutButton")
+    ?.addEventListener(
+      "click",
+      logout
+    );
+}
+
+
+/* =========================================================
+   NAVBAR UPDATE
+   ========================================================= */
+
+function updateNavbar() {
+
+  if (!navActions) {
+    return;
+  }
+
+
+  if (currentUser) {
+
+    renderLoggedInNavbar();
+
+  } else {
+
+    renderLoggedOutNavbar();
+
+  }
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHtml(value) {
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+
+/* =========================================================
+   AUTH FORM
+   ========================================================= */
+
+authForm?.addEventListener(
+  "submit",
+  async (event) => {
+
+    event.preventDefault();
+
+    clearAuthError();
+
+
+    const email =
+      emailInput.value
+        .trim()
+        .toLowerCase();
+
+    const password =
+      passwordInput.value;
+
+
+    if (!email) {
+
+      showAuthError(
+        "Please enter your email."
+      );
+
+      emailInput.focus();
+
+      return;
+
+    }
+
+
+    if (!password) {
+
+      showAuthError(
+        "Please enter your password."
+      );
+
+      passwordInput.focus();
+
+      return;
+
+    }
+
+
+    if (
+      authMode === "register" &&
+      !usernameInput.value.trim()
+    ) {
+
+      showAuthError(
+        "Please choose a username."
+      );
+
+      usernameInput.focus();
+
+      return;
+
+    }
+
+
+    const originalText =
+      authSubmit.textContent;
+
+
+    authSubmit.disabled = true;
+
+    authSubmit.style.opacity =
+      "0.7";
+
+    authSubmit.style.cursor =
+      "wait";
+
+
+    if (authMode === "register") {
+
+      authSubmit.textContent =
+        "Creating account...";
+
+    } else {
+
+      authSubmit.textContent =
+        "Logging in...";
+
+    }
+
+
+    try {
+
+      let data;
+
+
+      /* ================================================
+         REGISTER
+      ================================================= */
+
+      if (
+        authMode === "register"
+      ) {
+
+        const username =
+          usernameInput.value
+            .trim();
+
+
+        data =
+          await register(
+            username,
+            email,
+            password
+          );
+
+
+        currentUser =
+          data.user || null;
+
+
+        closeAuth();
+
+        updateNavbar();
+
+
+        showToast(
+          `Welcome to BuildForge${
+            currentUser?.username
+              ? `, ${currentUser.username}`
+              : ""
+          }!`
+        );
+
+
+      /* ================================================
+         LOGIN
+      ================================================= */
+
+      } else {
+
+        data =
+          await login(
+            email,
+            password
+          );
+
+
+        currentUser =
+          data.user || null;
+
+
+        closeAuth();
+
+        updateNavbar();
+
+
+        showToast(
+          `Welcome back${
+            currentUser?.username
+              ? `, ${currentUser.username}`
+              : ""
+          }!`
+        );
+
+      }
+
+
+    } catch (error) {
+
+      console.error(
+        "AUTH ERROR:",
+        error
+      );
+
+
+      showAuthError(
+        error.message ||
+        "Something went wrong."
+      );
+
+
+    } finally {
+
+      authSubmit.disabled =
+        false;
+
+      authSubmit.style.opacity =
+        "1";
+
+      authSubmit.style.cursor =
+        "pointer";
+
+      authSubmit.textContent =
+        originalText;
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   AUTH MODE BUTTONS
+   ========================================================= */
+
+registerMode?.addEventListener(
+  "click",
+  () => {
+
+    setAuthMode("register");
+
+  }
+);
+
+
+loginMode?.addEventListener(
+  "click",
+  () => {
+
+    setAuthMode("login");
+
+  }
+);
+
+
+/* =========================================================
+   NAV BUTTONS
+   ========================================================= */
+
+document
+  .getElementById("navStart")
+  ?.addEventListener(
+    "click",
+    () => openAuth("register")
+  );
+
+
+document
+  .getElementById("heroStart")
+  ?.addEventListener(
+    "click",
+    () => {
+
+      if (currentUser) {
+
+        document
+          .getElementById("studio")
+          ?.scrollIntoView({
+            behavior: "smooth"
+          });
+
+      } else {
+
+        openAuth("register");
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById("finalStart")
+  ?.addEventListener(
+    "click",
+    () => {
+
+      if (currentUser) {
+
+        document
+          .getElementById("studio")
+          ?.scrollIntoView({
+            behavior: "smooth"
+          });
+
+      } else {
+
+        openAuth("register");
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById("heroExplore")
+  ?.addEventListener(
+    "click",
+    () => {
+
+      document
+        .getElementById("studio")
+        ?.scrollIntoView({
+          behavior: "smooth"
+        });
+
+    }
+  );
+
+
+/* =========================================================
+   CLOSE MODAL
+   ========================================================= */
+
+document
+  .getElementById("closeModal")
+  ?.addEventListener(
+    "click",
+    closeAuth
+  );
+
+
+modal?.addEventListener(
+  "click",
+  (event) => {
+
+    if (
+      event.target === modal
+    ) {
+
+      closeAuth();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   ESCAPE KEY
+   ========================================================= */
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (
+      event.key === "Escape" &&
+      modal?.classList.contains("open")
+    ) {
+
+      closeAuth();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   STUDIO AI DEMO
+   ========================================================= */
+
+document
+  .querySelector(".ai-send")
+  ?.addEventListener(
+    "click",
+    () => {
+
+      if (!currentUser) {
+
+        openAuth("register");
+
+        return;
+
+      }
+
+      showToast(
+        "BuildForge AI Studio is coming next."
+      );
+
+    }
+  );
+
+
+/* =========================================================
+   STUDIO TOOLS
+   ========================================================= */
+
+document
+  .querySelectorAll(".studio-sidebar .tool")
+  .forEach((tool) => {
+
+    tool.addEventListener(
+      "click",
+      () => {
+
+        document
+          .querySelectorAll(
+            ".studio-sidebar .tool"
+          )
+          .forEach((item) => {
+
+            item.classList.remove(
+              "active"
+            );
+
+          });
+
+
+        tool.classList.add(
+          "active"
+        );
+
+      }
+    );
+
   });
+
+
+/* =========================================================
+   CHECK AUTHENTICATION
+   ========================================================= */
+
+async function initializeAuthentication() {
+
+  currentUser =
+    await getCurrentUser();
+
+  updateNavbar();
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+setAuthMode("register");
+
+initializeAuthentication();
