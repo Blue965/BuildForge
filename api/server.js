@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 
 require("dotenv").config();
+require("dotenv").config({ path: ".env.development.local" });
 
 const authRoutes = require("./auth");
 const projectsRoutes = require("./projects");
